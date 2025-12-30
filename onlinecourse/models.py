@@ -95,6 +95,8 @@ class Enrollment(models.Model):
     rating = models.FloatField(default=5.0)
 
 
+
+
 # One enrollment could have multiple submission
 # One submission could have multiple choices
 # One choice could belong to multiple submissions
