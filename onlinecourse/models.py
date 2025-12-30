@@ -94,6 +94,14 @@ class Question(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     question = models.CharField(max_length=100)
     grade = models.IntegerField(default=50)
+
+    def is_get_score(self, selected_ids):   # calculate if the learner gets the score of the question
+        all_answers = self.choice_set.filter(is_correct=True).count()
+        selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()
+        if all_answers == selected_correct:
+            return True
+        else:
+            return False
     
     def __str__(self):
         return f"Question: {self.content}"
