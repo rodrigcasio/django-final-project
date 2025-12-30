@@ -10,7 +10,6 @@ from django.conf import settings
 import uuid
 
 
-# Instructor model
 class Instructor(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -23,7 +22,6 @@ class Instructor(models.Model):
         return self.user.username
 
 
-# Learner model
 class Learner(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -52,7 +50,6 @@ class Learner(models.Model):
                self.occupation
 
 
-# Course model
 class Course(models.Model):
     name = models.CharField(null=False, max_length=30, default='online course')
     image = models.ImageField(upload_to='course_images/')
@@ -68,7 +65,6 @@ class Course(models.Model):
                "Description: " + self.description
 
 
-# Lesson model
 class Lesson(models.Model):
     title = models.CharField(max_length=200, default="title")
     order = models.IntegerField(default=0)
@@ -94,8 +90,13 @@ class Enrollment(models.Model):
     mode = models.CharField(max_length=5, choices=COURSE_MODES, default=AUDIT)
     rating = models.FloatField(default=5.0)
 
-
-
+class Question(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    question = models.CharField(max_length=100)
+    grade = models.IntegerField(default=50)
+    
+    def __str__(self):
+        return f"Question: {self.content}"
 
 # One enrollment could have multiple submission
 # One submission could have multiple choices
